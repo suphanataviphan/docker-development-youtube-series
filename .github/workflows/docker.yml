@@ -35,5 +35,4 @@ jobs:
       run: |
         docker push nurihaji/csharp:1.0.0
         docker push nurihaji/nodejs:1.0.0
-        docker push nurihaji/golang:1.0.0
         docker push nurihaji/python:1.0.0
