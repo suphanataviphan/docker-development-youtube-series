@@ -1,3 +1,7 @@
+###########################################################
+# Rename the file extension to ".yaml" (remove "_") to enable
+###########################################################
+
 name: Docker Series Builds
 
 ## Trigger on push. If we don't define any branch, this it will push on master branch
@@ -11,6 +15,13 @@ jobs:
     ## Do check out (download source code into ubuntu image) on the repo 
     ## actions in this mean for github repo, checkout is an action, v2 is tag
     - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      ## run command use for running linux command  
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build csharp
       run: |
         docker build ./c# -t nurihaji/csharp:1.0.0
@@ -20,3 +31,12 @@ jobs:
     - name: docker build python
       run: |
         docker build ./python -t nurihaji/python:1.0.0
+    - name: docker build golang
+      run: |
+        docker build ./golang -t nurihaji/golang:1.0.0
+    - name: docker push
+      run: |
+        docker push nurihaji/csharp:1.0.0
+        docker push nurihaji/nodejs:1.0.0
+        docker push nurihaji/golang:1.0.0
+        docker push nurihaji/python:1.0.0
