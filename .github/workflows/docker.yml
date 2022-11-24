@@ -1,0 +1,25 @@
+name: Docker Series Builds
+
+## Trigger on push. If we don't define any branch, this it will push on master branch
+on: [push]
+
+jobs:
+  build:
+    ## Ubuntu image that has Docker preconfigured. So you can run docker command in this
+    runs-on: ubuntu-latest
+    steps:
+    ## Do check out (download source code into ubuntu image) on the repo 
+    ## actions in this mean for github repo, checkout is an action, v2 is tag
+    - uses: actions/checkout@v2
+    - name: docker build csharp
+      run: |
+        docker build ./c# -t nurihaji/csharp:1.0.0
+    - name: docker build nodejs
+      run: |
+        docker build ./nodejs -t nurihaji/nodejs:1.0.0
+    - name: docker build python
+      run: |
+        docker build ./python -t nurihaji/python:1.0.0
+    - name: docker build golang
+      run: |
+        docker build ./golang -t nurihaji/golang:1.0.0
